@@ -6,6 +6,7 @@ function App() {
   const [glitchText, setGlitchText] = useState('VOCÊ FOI ESCOLHIDO.');
   const [timeLeft, setTimeLeft] = useState(12 * 60); // 12 minutos em segundos
   const [typedText, setTypedText] = useState('');
+  const [hasShownExitIntent, setHasShownExitIntent] = useState(false);
   const fullText = 'ACESSO_LIBERADO_COFRE_DIGITAL_ATIVO';
 
   useEffect(() => {
@@ -46,13 +47,58 @@ function App() {
       setTimeLeft(prev => prev > 0 ? prev - 1 : 0);
     }, 1000);
 
+    // Exit intent detection
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0 && !hasShownExitIntent) {
+        setHasShownExitIntent(true);
+        window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+      }
+    };
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!hasShownExitIntent) {
+        setHasShownExitIntent(true);
+        window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Detect Alt+F4, Ctrl+W, Ctrl+T, etc.
+      if (
+        (e.altKey && e.key === 'F4') ||
+        (e.ctrlKey && (e.key === 'w' || e.key === 'W')) ||
+        (e.ctrlKey && (e.key === 't' || e.key === 'T')) ||
+        (e.ctrlKey && (e.key === 'r' || e.key === 'R'))
+      ) {
+        if (!hasShownExitIntent) {
+          e.preventDefault();
+          setHasShownExitIntent(true);
+          window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+        }
+      }
+    };
+
+    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
       clearInterval(glitchInterval);
       clearInterval(timerInterval);
       clearInterval(typingInterval);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [hasShownExitIntent]);
 
+  const handleExitRedirect = () => {
+    setHasShownExitIntent(true);
+    window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+  };
+
+  const handlePaymentRedirect = (url: string) => {
+    window.open(url, '_blank');
+  };
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -101,7 +147,8 @@ function App() {
       price: "R$17",
       description: "Atualizações toda semana + pasta da semana",
       button: "SÓ QUERO TESTAR",
-      accent: "border-yellow-500 bg-yellow-500 bg-opacity-10"
+      accent: "border-yellow-500 bg-yellow-500 bg-opacity-10",
+      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f670fa3-5e79-49d6-b66a-73d5604064eb"
     },
     {
       name: "ACESSO MENSAL", 
@@ -109,14 +156,16 @@ function App() {
       description: "Acesso completo + bônus ocultos + grupo secreto",
       button: "ENTRAR NO CLUBE DOS CRIATIVOS PROIBIDOS",
       accent: "border-red-500 bg-red-500 bg-opacity-10",
-      popular: true
+      popular: true,
+      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f671345-e0be-4f5d-8fb9-5cae38e1bae0"
     },
     {
       name: "ACESSO VITALÍCIO",
       price: "R$67",
       description: "Tudo. Pra sempre. Sem pagar mais nada.",
       button: "QUERO TUDO PRA SEMPRE",
-      accent: "border-green-500 bg-green-500 bg-opacity-10"
+      accent: "border-green-500 bg-green-500 bg-opacity-10",
+      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f671429-a32f-49aa-80bc-4246e8fd57ee"
     }
   ];
 
@@ -285,11 +334,14 @@ function App() {
                   <p className="text-gray-300 mb-8 text-sm leading-relaxed">
                     {plan.description}
                   </p>
-                  <button className={`w-full py-4 px-6 rounded-lg font-bold text-sm transition-all duration-300 ${
+                  <button 
+                    onClick={() => handlePaymentRedirect(plan.paymentUrl)}
+                    className={`w-full py-4 px-6 rounded-lg font-bold text-sm transition-all duration-300 ${
                     plan.popular 
                       ? 'bg-red-600 hover:bg-red-700 text-white' 
                       : 'bg-gray-800 hover:bg-gray-700 text-white'
-                  } hover:scale-105 hover:shadow-lg border-2 border-current`}>
+                  } hover:scale-105 hover:shadow-lg border-2 border-current`}
+                  >
                     {plan.button}
                   </button>
                 </div>
@@ -299,7 +351,10 @@ function App() {
           
           {/* Strategic "No Thanks" Button */}
           <div className="mt-12 text-center">
-            <button className="text-gray-500 hover:text-red-400 text-sm underline transition-colors duration-300 font-medium">
+            <button 
+              onClick={handleExitRedirect}
+              className="text-gray-500 hover:text-red-400 text-sm underline transition-colors duration-300 font-medium"
+            >
               Não, obrigado. Prefiro continuar perdendo tempo criando do zero e competindo com quem já tem tudo pronto.
             </button>
             <div className="mt-3 text-xs text-gray-600 max-w-2xl mx-auto">
