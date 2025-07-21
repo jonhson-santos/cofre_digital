@@ -205,6 +205,31 @@ function App() {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
+        {/* Top Warning Banner */}
+        <div className="mb-8">
+          <div className="bg-red-900 bg-opacity-80 border-2 border-red-500 rounded-lg p-6 text-center relative animate-pulse">
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-full text-xs font-bold">
+              ⚠️ PAGAMENTO_NÃO_CONFIRMADO
+            </div>
+            <div className="space-y-3">
+              <h2 className="text-2xl md:text-3xl font-black text-white font-bebas">
+                🚨 ATENÇÃO: SEU PAGAMENTO AINDA NÃO FOI CONFIRMADO!
+              </h2>
+              <p className="text-lg text-yellow-400 font-bold">
+                Se você sair agora, perderá para sempre o acesso a estes criativos secretos
+              </p>
+              <div className="bg-black bg-opacity-50 border border-yellow-500 rounded-lg p-4 mt-4">
+                <p className="text-white font-bold text-sm">
+                  📋 PARA CONFIRMAR SEU ACESSO: Escolha uma das opções abaixo e finalize seu pagamento
+                </p>
+                <p className="text-red-400 font-bold text-xs mt-2">
+                  ⏰ Esta página expira em {formatTime(timeLeft)} - Não perca esta oportunidade única!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Hero Section */}
         <div className={`text-center mb-20 transition-all duration-2000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="mb-12">
@@ -390,30 +415,37 @@ function App() {
             <div className="mb-6 bg-red-900 bg-opacity-50 border border-red-500 rounded-lg p-6 max-w-3xl mx-auto">
               <div className="flex items-center justify-center mb-4">
                 <AlertTriangle className="w-6 h-6 text-red-400 mr-3" />
-                <h3 className="text-xl font-bold text-white">ATENÇÃO: ÚLTIMA CHANCE</h3>
+                <h3 className="text-xl font-bold text-white">🚨 PAGAMENTO PENDENTE - ÚLTIMA CHANCE</h3>
               </div>
               <div className="space-y-3 text-white">
-                <p className="font-bold text-lg">🚨 Se você fechar esta página agora:</p>
+                <p className="font-bold text-lg text-red-400">⚠️ SEU PAGAMENTO AINDA NÃO FOI CONFIRMADO!</p>
+                <p className="font-bold text-lg">🚨 Se você sair sem finalizar o pagamento:</p>
                 <div className="grid md:grid-cols-2 gap-3 text-sm">
                   <div className="flex items-start space-x-2">
                     <span className="text-red-400">❌</span>
-                    <span>Perderá acesso permanente ao cofre</span>
+                    <span>Seu pagamento será CANCELADO automaticamente</span>
                   </div>
                   <div className="flex items-start space-x-2">
                     <span className="text-red-400">❌</span>
-                    <span>Não receberá os criativos prontos</span>
+                    <span>Perderá acesso PERMANENTE ao cofre</span>
                   </div>
                   <div className="flex items-start space-x-2">
                     <span className="text-red-400">❌</span>
-                    <span>Voltará a criar tudo do zero</span>
+                    <span>NÃO receberá os criativos prontos</span>
                   </div>
                   <div className="flex items-start space-x-2">
                     <span className="text-red-400">❌</span>
-                    <span>Seus concorrentes ficarão na frente</span>
+                    <span>Esta oferta NUNCA mais aparecerá</span>
                   </div>
                 </div>
-                <p className="text-yellow-400 font-bold text-lg mt-4">
-                  ⏰ Esta oportunidade expira quando você sair da página
+                <div className="bg-black bg-opacity-50 border border-red-500 rounded-lg p-3 mt-4">
+                  <p className="text-yellow-400 font-bold text-lg">
+                    ⏰ TEMPO RESTANTE PARA CONFIRMAR: {formatTime(timeLeft)}
+                  </p>
+                  <p className="text-white font-bold text-sm mt-2">
+                    💳 Finalize seu pagamento AGORA ou perca para sempre!
+                  </p>
+                </div>
                 </p>
               </div>
             </div>
@@ -422,10 +454,11 @@ function App() {
               onClick={handleExitRedirect}
               className="text-gray-500 hover:text-red-400 text-sm underline transition-colors duration-300 font-medium"
             >
-              Não, obrigado. Prefiro sair e perder esta oportunidade única para sempre.
+              Não, obrigado. Quero CANCELAR meu pagamento e perder esta oportunidade única para sempre.
             </button>
             <div className="mt-3 text-xs text-gray-600">
-              <p className="text-red-400 font-bold">⚠️ AVISO: Esta página não voltará a aparecer e você não receberá o produto.</p>
+              <p className="text-red-400 font-bold">⚠️ AVISO FINAL: Seu pagamento será CANCELADO e você NÃO receberá o produto.</p>
+              <p className="text-red-400 font-bold mt-1">🚫 Esta oferta NUNCA mais aparecerá - É SUA ÚLTIMA CHANCE!</p>
             </div>
           </div>
         </div>
@@ -438,15 +471,15 @@ function App() {
           </div>
           
           <div className="space-y-4 text-xl text-white font-bold mb-6">
-            <p>Depois que sair dessa página,</p>
-            <p className="text-red-400">você não verá isso de novo.</p>
-            <p>E os seus concorrentes nunca vão saber</p>
-            <p className="text-yellow-400">como você chegou tão longe, tão rápido.</p>
+            <p>⚠️ SEU PAGAMENTO AINDA ESTÁ PENDENTE!</p>
+            <p className="text-red-400">Se sair agora, será CANCELADO automaticamente.</p>
+            <p>Finalize AGORA e garante sua vantagem secreta</p>
+            <p className="text-yellow-400">antes que seus concorrentes descubram.</p>
           </div>
           
           <div className="flex items-center justify-center space-x-3 text-2xl font-black text-yellow-400">
             <Key className="w-8 h-8" />
-            <span>Esta é sua vantagem secreta.</span>
+            <span>Confirme seu pagamento AGORA!</span>
           </div>
         </div>
       </div>
