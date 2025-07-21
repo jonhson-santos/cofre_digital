@@ -49,16 +49,19 @@ function App() {
 
     // Exit intent detection
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !hasShownExitIntent) {
+      if (e.clientY <= 0 && !hasShownExitIntent && e.target === document.documentElement) {
         setHasShownExitIntent(true);
-        window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+        setTimeout(() => {
+          window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+        }, 100);
       }
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (!hasShownExitIntent) {
-        setHasShownExitIntent(true);
-        window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+        e.preventDefault();
+        e.returnValue = 'Seu pagamento ainda não foi confirmado. Tem certeza que deseja sair?';
+        return 'Seu pagamento ainda não foi confirmado. Tem certeza que deseja sair?';
       }
     };
 
@@ -72,8 +75,11 @@ function App() {
       ) {
         if (!hasShownExitIntent) {
           e.preventDefault();
-          setHasShownExitIntent(true);
-          window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+          const confirmExit = confirm('Seu pagamento ainda não foi confirmado. Deseja realmente sair?');
+          if (confirmExit) {
+            setHasShownExitIntent(true);
+            window.location.href = 'https://clube-dos-criativos-oferta.vercel.app/';
+          }
         }
       }
     };
@@ -218,14 +224,6 @@ function App() {
               <p className="text-lg text-yellow-400 font-bold">
                 Se você sair agora, perderá para sempre o acesso a estes criativos secretos
               </p>
-              <div className="bg-black bg-opacity-50 border border-yellow-500 rounded-lg p-4 mt-4">
-                <p className="text-white font-bold text-sm">
-                  📋 PARA CONFIRMAR SEU ACESSO: Escolha uma das opções abaixo e finalize seu pagamento
-                </p>
-                <p className="text-red-400 font-bold text-xs mt-2">
-                  ⏰ Esta página expira em {formatTime(timeLeft)} - Não perca esta oportunidade única!
-                </p>
-              </div>
             </div>
           </div>
         </div>
