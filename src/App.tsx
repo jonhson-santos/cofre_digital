@@ -446,7 +446,6 @@ function App() {
                     💳 Finalize seu pagamento AGORA ou perca para sempre!
                   </p>
                 </div>
-                </p>
               </div>
             </div>
             
