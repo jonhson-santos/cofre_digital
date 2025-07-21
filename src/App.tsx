@@ -148,7 +148,7 @@ function App() {
       description: "Atualizações toda semana + pasta da semana",
       button: "SÓ QUERO TESTAR",
       accent: "border-yellow-500 bg-yellow-500 bg-opacity-10",
-      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f670fa3-5e79-49d6-b66a-73d5604064eb"
+      paymentUrl: "https://app.pushinpay.com.br/service/pay/9F671662-2D90-4362-AEA1-F0CC4BBEA7A5"
     },
     {
       name: "ACESSO MENSAL", 
@@ -157,7 +157,7 @@ function App() {
       button: "ENTRAR NO CLUBE DOS CRIATIVOS PROIBIDOS",
       accent: "border-red-500 bg-red-500 bg-opacity-10",
       popular: true,
-      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f671345-e0be-4f5d-8fb9-5cae38e1bae0"
+      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f67198c-c7c6-41c3-ba27-e626c17039ef"
     },
     {
       name: "ACESSO VITALÍCIO",
@@ -165,7 +165,7 @@ function App() {
       description: "Tudo. Pra sempre. Sem pagar mais nada.",
       button: "QUERO TUDO PRA SEMPRE",
       accent: "border-green-500 bg-green-500 bg-opacity-10",
-      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f671429-a32f-49aa-80bc-4246e8fd57ee"
+      paymentUrl: "https://app.pushinpay.com.br/service/pay/9f671a60-18f1-44ba-af8a-16245afa83a1"
     }
   ];
 
@@ -265,6 +265,42 @@ function App() {
           </div>
         </div>
 
+        {/* VSL Section */}
+        <div className="mb-16">
+          <div className="bg-black bg-opacity-80 border-2 border-red-500 rounded-lg p-8">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold text-white font-bebas mb-4">
+                🎥 ASSISTA ANTES DE DECIDIR
+              </h2>
+              <p className="text-xl text-yellow-400 font-bold mb-2">
+                Veja como funciona na prática
+              </p>
+              <p className="text-red-400 font-bold text-lg">
+                ⚠️ Este vídeo será removido em breve
+              </p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full rounded-lg border-2 border-yellow-500"
+                  src="https://www.youtube.com/embed/iT5g58gSDFM"
+                  title="VSL - Clube dos Criativos"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+            
+            <div className="text-center mt-8 bg-red-900 bg-opacity-30 border border-red-500 rounded-lg p-4">
+              <p className="text-white font-bold text-lg">
+                📺 Depois de assistir, você entenderá por que isso é uma vantagem injusta
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Vault Contents */}
         <div className="mb-16">
           <div className="bg-black bg-opacity-60 border-2 border-red-500 rounded-lg p-8">
@@ -351,21 +387,45 @@ function App() {
           
           {/* Strategic "No Thanks" Button */}
           <div className="mt-12 text-center">
+            <div className="mb-6 bg-red-900 bg-opacity-50 border border-red-500 rounded-lg p-6 max-w-3xl mx-auto">
+              <div className="flex items-center justify-center mb-4">
+                <AlertTriangle className="w-6 h-6 text-red-400 mr-3" />
+                <h3 className="text-xl font-bold text-white">ATENÇÃO: ÚLTIMA CHANCE</h3>
+              </div>
+              <div className="space-y-3 text-white">
+                <p className="font-bold text-lg">🚨 Se você fechar esta página agora:</p>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-start space-x-2">
+                    <span className="text-red-400">❌</span>
+                    <span>Perderá acesso permanente ao cofre</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-red-400">❌</span>
+                    <span>Não receberá os criativos prontos</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-red-400">❌</span>
+                    <span>Voltará a criar tudo do zero</span>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-red-400">❌</span>
+                    <span>Seus concorrentes ficarão na frente</span>
+                  </div>
+                </div>
+                <p className="text-yellow-400 font-bold text-lg mt-4">
+                  ⏰ Esta oportunidade expira quando você sair da página
+                </p>
+              </div>
+            </div>
+            
             <button 
               onClick={handleExitRedirect}
               className="text-gray-500 hover:text-red-400 text-sm underline transition-colors duration-300 font-medium"
             >
-              Não, obrigado. Prefiro continuar perdendo tempo criando do zero e competindo com quem já tem tudo pronto.
+              Não, obrigado. Prefiro sair e perder esta oportunidade única para sempre.
             </button>
-            <div className="mt-3 text-xs text-gray-600 max-w-2xl mx-auto">
-              <p className="mb-2">⚠️ Ao clicar aqui, você:</p>
-              <div className="grid md:grid-cols-2 gap-2 text-left">
-                <p>• Perde acesso permanente a este cofre</p>
-                <p>• Volta a criar criativos do zero</p>
-                <p>• Continua testando sem garantias</p>
-                <p>• Seus concorrentes ficam na frente</p>
-              </div>
-              <p className="mt-3 text-red-400 font-bold">Esta página não voltará a aparecer.</p>
+            <div className="mt-3 text-xs text-gray-600">
+              <p className="text-red-400 font-bold">⚠️ AVISO: Esta página não voltará a aparecer e você não receberá o produto.</p>
             </div>
           </div>
         </div>
